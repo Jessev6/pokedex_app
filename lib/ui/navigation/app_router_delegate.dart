@@ -8,7 +8,7 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
     @override
     GlobalKey<NavigatorState> get navigatorKey => GlobalKey<NavigatorState>();
 
-    bool _inPokedex = true;
+    bool _inPokedex = false;
 
     AppRoutePath get currentConfiguration {
       if (_inPokedex) {
@@ -18,14 +18,20 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
       return AppRoutePath.menu();
     }
 
+    _navigateToPokedex() {
+      _inPokedex = true;
+      notifyListeners();
+    }
+
     @override
     Widget build(BuildContext context) {
       return Navigator(
         key: navigatorKey,
         pages: [
-          MenuPage(),
+          MenuPage(openPokedex: _navigateToPokedex),
           if (_inPokedex) PokedexPage()
         ],
+
         onPopPage: (route, result) {
           if (!route.didPop(result)) {
             return false;
