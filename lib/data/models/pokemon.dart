@@ -27,7 +27,9 @@ class Pokemon {
         this.sprites,
         this.stats,
         this.types,
+        this.url,
         this.weight,
+        this.detailsLoaded,
     });
 
     List<Ability> abilities;
@@ -47,7 +49,9 @@ class Pokemon {
     Sprites sprites;
     List<Stat> stats;
     List<Type> types;
+    String url;
     int weight;
+    bool detailsLoaded = false;
 
     factory Pokemon.fromJson(Map<String, dynamic> json) => Pokemon(
         abilities: json["abilities"] == null ? null : List<Ability>.from(json["abilities"].map((x) => Ability.fromJson(x))),
@@ -68,7 +72,10 @@ class Pokemon {
         stats: json["stats"] == null ? null : List<Stat>.from(json["stats"].map((x) => Stat.fromJson(x))),
         types: json["types"] == null ? null : List<Type>.from(json["types"].map((x) => Type.fromJson(x))),
         weight: json["weight"] == null ? null : json["weight"],
+        detailsLoaded: true,
     );
+
+    
 
     Map<String, dynamic> toJson() => {
         "abilities": abilities == null ? null : List<dynamic>.from(abilities.map((x) => x.toJson())),

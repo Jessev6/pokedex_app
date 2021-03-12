@@ -4,6 +4,10 @@ import 'package:pokedex_app/ui/navigation/app_route_path.dart';
 class AppRouteInformationParser extends RouteInformationParser<AppRoutePath> {
   @override
   RouteInformation restoreRouteInformation(AppRoutePath path) {
+    if (path.isDetailScreen) {
+      return RouteInformation(location: "/pokedex/${path.id}");
+    }
+
     if (path.isPokedex) {
       return RouteInformation(location: "/pokedex");
     }
@@ -25,7 +29,19 @@ class AppRouteInformationParser extends RouteInformationParser<AppRoutePath> {
       return AppRoutePath.pokedex();
     }
 
+    // Handle "/pokedex/:id"
+    if (uri.pathSegments.length == 2 && uri.pathSegments[0] == "pokedex" && isNumeric(uri.pathSegments[1])) {
+      return AppRoutePath.detail(uri.pathSegments[1] as int);
+    }
+
     return AppRoutePath.menu();
   }
 
+}
+
+bool isNumeric(String s) {
+  if(s == null) {
+    return false;
+  }
+  return double.tryParse(s) != null;
 }

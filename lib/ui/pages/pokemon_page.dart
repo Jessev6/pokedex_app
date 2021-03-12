@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex_app/ui/view/pokedex_view.dart';
+import 'package:pokedex_app/data/models/pokemon.dart';
+import 'package:pokedex_app/ui/view/pokemon_view.dart';
 import 'package:provider/provider.dart';
 
-class PokedexPage extends Page {
-  final Function onPokemonSelected;
+class PokemonPage extends Page {
+  final Pokemon pokemon;
 
-  PokedexPage({
-    @required this.onPokemonSelected,
+  PokemonPage({
+    @required this.pokemon,
   });
 
   @override
@@ -15,10 +16,10 @@ class PokedexPage extends Page {
       settings: this,
       builder: (context) {
         return Provider.value(
-          value: onPokemonSelected,
-          child: PokedexView(),
+          value: pokemon,
+          child: PokemonView(),
         );
       }
     );
-  }
+  } 
 }

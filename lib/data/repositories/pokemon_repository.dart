@@ -20,10 +20,24 @@ class PokemonRepository {
 
     var jsonResponse = convert.jsonDecode(response.body);
     var pokemon = jsonResponse["results"]
-      .map((result) => Pokemon(name: result["name"]))
+      .map((result) => Pokemon(
+        name: result["name"],
+        url: result["url"],
+      ))
       .toList()
       .cast<Pokemon>();
 
     return pokemon;
+  }
+
+  Future<Pokemon> getDetails(Pokemon pokemon) async {
+    final uri = Uri.parse(pokemon.url);
+
+    var response = await http.get(uri);
+    if (response.statusCode != 200)
+      throw Exception("Could not fetch pokemon");
+
+    var jsonResponse = convert.jsonDecode(response.body);
+    return Pokemon.fromJson(jsonResponse);
   }
 }
