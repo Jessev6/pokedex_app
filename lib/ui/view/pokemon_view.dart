@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex_app/data/models/pokemon.dart';
+import 'package:pokedex_app/ui/components/pokemon/sprites.dart';
 import 'package:provider/provider.dart';
 
 class PokemonView extends StatelessWidget {
@@ -13,8 +14,9 @@ class PokemonView extends StatelessWidget {
           appBar: AppBar(
             title: Text(pokemon.name),
             centerTitle: true,
+            elevation: 0,
           ),
-          body: Center(child: Text(pokemon.name),),
+          body: PokemonSprites(),
         );
       }
     );
